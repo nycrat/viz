@@ -9,13 +9,13 @@ Application::Application() {
   // Setup Dear ImGui context
   IMGUI_CHECKVERSION();
   ImGui::CreateContext();
-  ImGuiIO &io = ImGui::GetIO();
-  (void)io;
-  io.ConfigFlags |=
+  io_ = &ImGui::GetIO();
+  (void)io_;
+  io_->ConfigFlags |=
       ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
-  io.ConfigFlags |=
-      ImGuiConfigFlags_NavEnableGamepad;            // Enable Gamepad Controls
-  io.ConfigFlags |= ImGuiConfigFlags_DockingEnable; // Enable Docking
+  io_->ConfigFlags |=
+      ImGuiConfigFlags_NavEnableGamepad;              // Enable Gamepad Controls
+  io_->ConfigFlags |= ImGuiConfigFlags_DockingEnable; // Enable Docking
   // io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable; // Enable
   // Multi-Viewport / Platform Windows
   // io.ConfigViewportsNoAutoMerge = true;
@@ -41,18 +41,18 @@ Application::Application() {
                     // io.ConfigDpiScaleFonts=true automatically overrides
                     // this for every window depending on the current monitor)
 #if GLFW_VERSION_MAJOR >= 3 && GLFW_VERSION_MINOR >= 3
-  io.ConfigDpiScaleFonts =
+  io_->ConfigDpiScaleFonts =
       true; // [Experimental] Automatically overwrite style.FontScaleDpi in
             // Begin() when Monitor DPI changes. This will scale fonts but
             // _NOT_ scale sizes/padding for now.
-  io.ConfigDpiScaleViewports =
+  io_->ConfigDpiScaleViewports =
       true; // [Experimental] Scale Dear ImGui and Platform Windows when
             // Monitor DPI changes.
 #endif
 
   // When viewports are enabled we tweak WindowRounding/WindowBg so platform
   // windows can look identical to regular ones.
-  if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable) {
+  if (io_->ConfigFlags & ImGuiConfigFlags_ViewportsEnable) {
     style.WindowRounding = 0.0f;
     style.Colors[ImGuiCol_WindowBg].w = 1.0f;
   }
@@ -122,7 +122,7 @@ void Application::run() {
       ImGui::Text("counter = %d", counter);
 
       ImGui::Text("Application average %.3f ms/frame (%.1f FPS)",
-                  1000.0f / io_.Framerate, io_.Framerate);
+                  1000.0f / io_->Framerate, io_->Framerate);
       ImGui::End();
     }
 
@@ -154,7 +154,7 @@ void Application::run() {
     // save/restore it to make it easier to paste this code elsewhere.
     //  For this specific demo app we could also call
     //  glfwMakeContextCurrent(window) directly)
-    if (io_.ConfigFlags & ImGuiConfigFlags_ViewportsEnable) {
+    if (io_->ConfigFlags & ImGuiConfigFlags_ViewportsEnable) {
       GLFWwindow *backup_current_context = glfwGetCurrentContext();
       ImGui::UpdatePlatformWindows();
       ImGui::RenderPlatformWindowsDefault();

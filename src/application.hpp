@@ -16,7 +16,7 @@ public:
 
 private:
   viz::Window window_{};
-  ImGuiIO io_;
+  ImGuiIO *io_;
 };
 
 } // namespace viz
