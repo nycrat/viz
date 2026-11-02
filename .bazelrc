@@ -1,1 +1,2 @@
-common --cxxopt=--std=c++26
+build --cxxopt=--std=c++20 # TODO: use c++26 when toolchain stuff is set up properly
+build --per_file_copt=^src/.*@-Wall,-Wextra,-Wpedantic,-Werror,-Wshadow,-Wconversion
